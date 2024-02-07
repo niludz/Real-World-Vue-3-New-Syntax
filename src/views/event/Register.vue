@@ -1,14 +1,18 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <script setup>
 import { useRouter } from 'vue-router'
+import { defineProps, inject } from 'vue'
 
 // eslint-disable-next-line vue/no-setup-props-destructure
-defineProps(['evenet'])
+const { event } = defineProps(['event'])
 const router = useRouter()
+const GStore = inject('GStore')
 
 const register = () => {
-  // If registration API call is successful
-  // Push back to the event details
+  GStore.flashMessage = 'You are successfullly registered for' + event.title
+  setTimeout(() => {
+    GStore.flashMessage = ''
+  }, 3000)
   router.replace({
     name: 'EventDetails',
   })
